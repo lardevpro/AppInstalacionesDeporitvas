@@ -31,13 +31,24 @@ El proyecto sigue una arquitectura **organizada por capas**, garantizando la sep
 
 ## 🏗 Estructura del Proyecto
 
+A continuación se detalla la organización de los archivos y componentes principales en la solución de Visual Studio:
+
 ```text
-├── src/
-│   ├── SportsReservations.API/         # Capa de Presentación (Controladores y Configuración)
-│   ├── SportsReservations.Core/        # Capa de Dominio (Entidades, Interfaces de Repositorio y DTOs)
-│   ├── SportsReservations.Services/    # Capa de Negocio (Lógica, Validaciones y Servicios)
-│   └── SportsReservations.Infrastructure/ # Capa de Datos (Contexto de EF Core, Repositorios y Migraciones)
-└── SportsReservations.sln              # Solución de Visual Studio
+AppInstalacionesDeporitvas/
+├── Controllers/                  # Controladores de la API REST
+│   ├── ClientesControllers.cs
+│   ├── InstalacionesDeportivasControllers.cs
+│   └── ReservasControllers.cs
+├── Data/                         # Contexto de Base de Datos y Datos Iniciales
+│   ├── DeporteDbContext.cs       # DbContext de Entity Framework Core
+│   └── DemoDataSeeder.cs         # Sembrado de datos para pruebas iniciales
+├── DTOs/                         # Objetos de Transferencia de Datos (Data Transfer Objects)
+├── Enums/                        # Enumerados del Sistema
+│   ├── EstadoReserva.cs          # (Pendiente, Confirmada, Cancelada, Finalizada)
+│   └── TipoDeporte.cs            # (Pádel, Tenis, Fútbol, Natación)
+├── Migrations/                   # Historial de Migraciones de la Base de Datos
+└── Models/                       # Modelos de Datos del Dominio
+    └── EntidadesDeportivas.cs    # Definición de las Entidades del Negocio
 ```
 
 ---
@@ -53,34 +64,34 @@ El proyecto sigue una arquitectura **organizada por capas**, garantizando la sep
 1. **Clonar el repositorio:**
    ```bash
    git clone https://github.com
-   cd nombre-del-repositorio
+   cd AppInstalacionesDeporitvas
    ```
 
 2. **Configurar la cadena de conexión:**
-   Abre el archivo `appsettings.json` en el proyecto Web API y añade tus credenciales de MySQL:
+   Abre el archivo `appsettings.json` en la raíz del proyecto y añade tus credenciales de MySQL:
    ```json
    "ConnectionStrings": {
-     "DefaultConnection": "Server=localhost;Database=SportsReservationsDb;Uid=TU_USUARIO;Pwd=TU_CONTRASEÑA;"
+     "DefaultConnection": "Server=localhost;Database=DeporteDb;Uid=TU_USUARIO;Pwd=TU_CONTRASEÑA;"
    }
    ```
 
 3. **Ejecutar las migraciones de Entity Framework:**
-   Genera la base de datos y las tablas ejecutando el siguiente comando en la raíz de la solución o en la consola del administrador de paquetes:
+   Genera la base de datos y las tablas ejecutando el siguiente comando en la terminal:
    ```bash
-   dotnet ef database update --project src/SportsReservations.Infrastructure --startup-project src/SportsReservations.API
+   dotnet ef database update
    ```
 
 4. **Iniciar la aplicación:**
    ```bash
-   dotnet run --project src/SportsReservations.API
+   dotnet run
    ```
 
 ---
 
 ## 💻 Pruebas con Swagger
 
-Una vez iniciada la aplicación, la documentación interactiva estará disponible en la siguiente dirección local:
-👉 `https://localhost:XXXX/swagger/index.html` *(Reemplazar por el puerto asignado)*.
+Una vez iniciada la aplicación, la documentación interactiva e interfaz de pruebas estará disponible en la siguiente dirección local:
+👉 `https://localhost:XXXX/swagger/index.html` *(Reemplazar `XXXX` por el puerto SSL asignado por tu entorno)*.
 
 Desde Swagger se pueden probar los flujos clave requeridos:
 *   Creación exitosa de reservas con cálculo automático de precios.
